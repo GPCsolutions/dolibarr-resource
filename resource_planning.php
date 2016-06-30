@@ -48,7 +48,10 @@ $form = new Form($db);
 $morecss=array(
 	"/resource/js/fullcalendar/fullcalendar.css",
 	"/resource/js/jquery.qtip.css"
+	,"/resource/css/resource.css"
 );
+
+if (GETPOST('optioncss') == 'print') $morecss[] = '/resource/css/resource.print.css';
 
 $morejs=array(
 	"/resource/js/fullcalendar/fullcalendar.js",
@@ -147,6 +150,11 @@ jQuery(document).ready(function() {
 					at: "bottomLeft"
 				}
 			});
+		},
+		viewRender: function(view, element) {
+			setTimeout(function() {
+				$(window).trigger("resize");	
+			}, 1);
 		}
 	});
 				
