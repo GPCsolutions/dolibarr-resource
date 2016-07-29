@@ -263,17 +263,20 @@ foreach ( $eventarray as $day => $event_to_send ) {
 			if ($event_to_send->libelle == 'Montage') {
 				$event_to_send->libelle = 'M';
 			}
-			if ($event_to_send->libelle == 'D&eacute;montage') {
+			if ($event_to_send->libelle == 'D&eacute;montage' || $event_to_send->libelle == 'Démontage') {
 				$event_to_send->libelle = 'D';
 			}
 			if ($event_to_send->libelle == 'Exploitation') {
 				$event_to_send->libelle = 'E';
 			}
 			
+			if (!empty($conf->global->RESOURCE_SHOW_PROJECT_NAME)) $title = $project->title . ' ' . $event_to_send->libelle;
+			else $title = dol_trunc($project->title, 10) . ' ' . $event_to_send->libelle;
+			
 			$event_json[] = array (
 					'id' => $event_to_send->id,
 					// 'title' => $project->title.' '.dol_html_entity_decode($event_to_send->libelle, ENT_COMPAT | ENT_HTML401),
-					'title' => dol_trunc($project->title, 10) . ' ' . $event_to_send->libelle,
+					'title' => $title,
 					'code' => $event_to_send->code,
 					'action_code' => $event_to_send->action_code,
 					'description' => $description,
